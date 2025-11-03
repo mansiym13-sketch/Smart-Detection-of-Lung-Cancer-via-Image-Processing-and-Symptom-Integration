@@ -1,0 +1,13 @@
+:root{--brand:#0ea5e9}
+body{background:#0b1020;color:#e5e7eb}
+.header,.footer{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+.brand{color:var(--brand)}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin:1rem 0}
+.card{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:1rem;display:flex;flex-direction:column}
+.card .label{color:#9ca3af;font-size:.9rem}
+.card .value{font-size:1.4rem;color:#fbbf24}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;align-items:start}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+article,aside{background:#0f172a;border:1px solid #1f2937;border-radius:12px;padding:1rem}
+button[type="submit"]{background:var(--brand);border:none}
+@media (max-width: 1000px){.cards{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}

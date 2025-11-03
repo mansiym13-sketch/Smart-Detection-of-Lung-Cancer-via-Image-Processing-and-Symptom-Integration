@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block title %}Lung Cancer Prediction — Smart Detection{% endblock %}
+{% block content %}
+  <section class="metrics">
+    <h1>Lung Cancer Prediction</h1>
+    <p class="muted">Smart detection via symptom integration and image processing.</p>
+    <div class="cards">
+      <div class="card"><span class="label">Dataset</span><span class="value">{{ metrics.dataset_size }}</span></div>
+      <div class="card"><span class="label">Accuracy</span><span class="value">{{ metrics.accuracy }}</span></div>
+      <div class="card"><span class="label">Precision</span><span class="value">{{ metrics.precision }}</span></div>
+      <div class="card"><span class="label">Recall</span><span class="value">{{ metrics.recall }}</span></div>
+      <div class="card"><span class="label">F1</span><span class="value">{{ metrics.f1 }}</span></div>
+    </div>
+  </section>
+
+  <section class="grid-2">
+    <article>
+      <h3>Enter Patient Features</h3>
+      <form method="post" action="/predict" enctype="multipart/form-data">
+        <div class="grid-3">
+          <label>GENDER
+            <select name="GENDER" required>
+              <option value="1">Male</option>
+              <option value="2">Female</option>
+            </select>
+          </label>
+          <label>AGE
+            <input type="number" name="AGE" min="21" max="100" value="60" required>
+          </label>
+          <label>SMOKING
+            <select name="SMOKING" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>YELLOW_FINGERS
+            <select name="YELLOW_FINGERS" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>ANXIETY
+            <select name="ANXIETY" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>PEER_PRESSURE
+            <select name="PEER_PRESSURE" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>CHRONIC DISEASE
+            <select name="CHRONIC DISEASE" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>FATIGUE
+            <select name="FATIGUE" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>ALLERGY
+            <select name="ALLERGY" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>WHEEZING
+            <select name="WHEEZING" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>ALCOHOL CONSUMING
+            <select name="ALCOHOL CONSUMING" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>COUGHING
+            <select name="COUGHING" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>SHORTNESS OF BREATH
+            <select name="SHORTNESS OF BREATH" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>SWALLOWING DIFFICULTY
+            <select name="SWALLOWING DIFFICULTY" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>CHEST PAIN
+            <select name="CHEST PAIN" required>
+              <option value="1">No</option>
+              <option value="2">Yes</option>
+            </select>
+          </label>
+          <label>Chest X-ray / CT Image (optional)
+            <input type="file" name="image" accept="image/*">
+          </label>
+        </div>
+        <footer>
+          <button type="submit">Predict</button>
+        </footer>
+      </form>
+    </article>
+    <aside>
+      <h3>Model Insights</h3>
+      <figure>
+        <img src="/{{ metrics.cm_image }}" alt="Confusion Matrix" style="max-width:100%;height:auto;">
+        <figcaption>Confusion Matrix</figcaption>
+      </figure>
+      {% if features %}
+        <h4>Top Features</h4>
+        <ul>
+          {% for f in features %}
+            <li>{{ f.feature }} — {{ '%.3f'|format(f.importance) }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </aside>
+  </section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Prediction Result — NeoLung{% endblock %}
+{% block content %}
+  <section>
+    <h2>Prediction Result</h2>
+    <article class="result-card">
+      <p>LUNG_CANCER prediction:</p>
+      <h1 class="prediction {{ 'yes' if prediction == 'YES' else 'no' }}">{{ prediction }}</h1>
+      <div class="cards" style="margin-top:1rem;">
+        <div class="card"><span class="label">Combined Risk</span><span class="value">{{ combined_risk }}</span></div>
+        <div class="card"><span class="label">Symptoms Model</span><span class="value">{{ symptom_prob }}</span></div>
+        {% if image_score is not none %}
+          <div class="card"><span class="label">Image Score</span><span class="value">{{ image_score }}</span></div>
+        {% endif %}
+      </div>
+    </article>
+    <details open>
+      <summary>Submitted Input</summary>
+      <pre>{{ input_data | tojson(indent=2) }}</pre>
+    </details>
+    {% if image_info %}
+      <h3>Image Analysis</h3>
+      <div class="grid-3">
+        <figure>
+          <img src="/{{ image_info.original }}" alt="Original" style="max-width:100%">
+          <figcaption>Original</figcaption>
+        </figure>
+        <figure>
+          <img src="/{{ image_info.gray }}" alt="Gray" style="max-width:100%">
+          <figcaption>Grayscale</figcaption>
+        </figure>
+        <figure>
+          <img src="/{{ image_info.clahe }}" alt="CLAHE" style="max-width:100%">
+          <figcaption>Contrast (CLAHE)</figcaption>
+        </figure>
+        <figure>
+          <img src="/{{ image_info.edges }}" alt="Edges" style="max-width:100%">
+          <figcaption>Edges</figcaption>
+        </figure>
+        <figure>
+          <img src="/{{ image_info.hog }}" alt="HOG" style="max-width:100%">
+          <figcaption>HOG</figcaption>
+        </figure>
+      </div>
+      <pre>{{ image_info.metrics | tojson(indent=2) }}</pre>
+    {% endif %}
+    <p><a href="/">← Back to Home</a></p>
+  </section>
+{% endblock %}
